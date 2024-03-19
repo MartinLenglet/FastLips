@@ -1,0 +1,89 @@
+transformer:
+  encoder_layer: 4
+  encoder_head: 2
+  encoder_hidden: 256
+  decoder_layer: 6
+  decoder_head: 2
+  decoder_hidden: 256
+  conv_filter_size: 1024
+  conv_kernel_size: [9, 1]
+  encoder_dropout: 0.2
+  decoder_dropout: 0.2
+
+visual_decoder:
+  decoder_layer: 4
+  decoder_head: 2
+  decoder_hidden: 256
+  conv_filter_size: 1024
+  conv_kernel_size: [9, 1]
+  decoder_dropout: 0.2
+
+variance_predictor:
+  filter_size: 256
+  kernel_size: 3
+  dropout: 0.5
+  detach_energy_prediction: True
+
+variance_embedding:
+  pitch_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the pitch values are not normalized during preprocessing
+  energy_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the energy values are not normalized during preprocessing
+  n_bins: 256
+
+variance_embedding_visual:
+  lips_aperture_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the pitch values are not normalized during preprocessing
+  lips_spreading_quantization: "linear" # support 'linear' or 'log', 'log' is allowed only if the energy values are not normalized during preprocessing
+  n_bins: 256
+
+multi_speaker: True
+
+compute_phon_prediction: False
+
+visual_prediction: 
+  compute_visual_prediction: True
+  extension: "AU"
+  visual_postnet: True
+  separate_visual_decoder: True
+
+visual_reference_encoder:
+  conv_filters: [32, 32, 64, 64, 128, 128]
+  ref_enc_size: [3, 3]
+  ref_enc_strides: [2, 2]
+  ref_enc_pad: [1, 1]
+  gru_hidden: 128
+
+au_smoothing:
+  use_smoothing: False
+  cutoff: 3
+
+use_variance_predictor:
+  pitch: True
+  energy: True
+
+use_variance_embeddings: 
+  pitch: True
+  energy: True
+
+use_variance_predictor_visual:
+  lips_aperture: True
+  lips_spreading: True
+
+use_variance_embeddings_visual: 
+  lips_aperture: True
+  lips_spreading: True
+
+save_predictions:
+  mel: True
+  duration: False
+  log_duration: False
+  pitch: False
+  energy: False
+  phon: False
+  au: True
+  lips_aperture: False
+  lips_spreading: False
+
+max_seq_len: 2000
+
+vocoder:
+  model: "WAVEGLOW" # support 'HiFi-GAN', 'MelGAN', 'WAVEGLOW'
+  speaker: "universal" # support  'LJSpeech', 'universal'
