@@ -434,7 +434,7 @@ class VarianceAdaptor(nn.Module):
             au_mask = get_mask_from_lengths(au_len)
 
         # ---------- Compute explicit predictors at frame-level ----------------
-        if not self.training or mel_mask.nelement():
+        if mel_mask.nelement():
             # AUDIO: Pitch
             if self.pitch_feature_level == "frame_level":
                 if self.use_variance_predictor["pitch"]:
@@ -466,7 +466,7 @@ class VarianceAdaptor(nn.Module):
                 energy_prediction = None
 
         # VISUAL: lips_aperture
-        if not self.training or au_mask.nelement():
+        if au_mask.nelement():
             if self.lips_aperture_feature_level == "frame_level":
                 if self.use_variance_predictor_visual["lips_aperture"]:
                     lips_aperture_prediction, lips_aperture_embedding = self.get_lips_aperture_embedding(

@@ -52,7 +52,7 @@ This implementation is not intended to be trained jointly with a neural vocoder.
 1. Download/Clone this repo
 2. Install python requirements: 
 ```
-pip install -r requirements.txt
+pip install -r requirements_3-10.txt
 ```
 3. Update configuration files
 
@@ -86,6 +86,9 @@ You can download the [checkpoint](https://drive.google.com/drive/folders/1bABLRH
 ```
 python3 synthesize.py --source preprocessed_data/ALL_corpus/test_AD_neutral_FS.txt --restore_step 40000 --mode batch -p config/Lips_Pred/preprocess.yaml -m config/Lips_Pred/model_postnet_pred_aperture_spreading.yaml -t config/Lips_Pred/train_postnet_pred_aperture_spreading.yaml
 ```
+
+## Vocoder
+Refer to the [Waveglow repository](https://github.com/MartinLenglet/Waveglow_GPU) to use our vocoder.
 
 # Acknowledgements
 This research has received funding from the BPI project THERADIA and MIAI@Grenoble-Alpes (ANR-19-P3IA-0003). This work was granted access to HPC/IDRIS under the allocation 2023-AD011011542R2 made by GENCI.
