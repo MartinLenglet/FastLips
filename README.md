@@ -93,12 +93,12 @@ Refer to the [Waveglow repository](https://github.com/MartinLenglet/Waveglow_GPU
 # Acknowledgements
 This research has received funding from the BPI project THERADIA and MIAI@Grenoble-Alpes (ANR-19-P3IA-0003). This work was granted access to HPC/IDRIS under the allocation 2023-AD011011542R2 made by GENCI.
 
-<!-- # Citation
-    @inproceedings{lenglet2024fastlips,
-        title={FastLips: an End-to-End Audiovisual Text-to-Speech System with Lip Features Prediction for Virtual Avatars},
-        author={Lenglet, Martin and Perrotin, Olivier and Bailly, G{\'e}rard},
-        booktitle={Proc. of Interspeech},
-        pages={to be updated},
-        year={2024},
-        organization={ISCA}
-    } -->
+# Citation
+    @inproceedings{lenglet24_interspeech,
+      title     = {FastLips: an End-to-End Audiovisual Text-to-Speech System with Lip Features Prediction for Virtual Avatars},
+      author    = {Martin Lenglet and Olivier Perrotin and Gerard Bailly},
+      year      = {2024},
+      booktitle = {Interspeech 2024},
+      pages     = {3450--3454},
+      doi       = {10.21437/Interspeech.2024-462},
+    }
