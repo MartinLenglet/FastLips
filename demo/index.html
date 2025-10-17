@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastLips: Demo</title>
+
+    <!-- Include Video.js CSS -->
+    <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
+
+    <!-- Include Video.js JavaScript from CDN -->
+    <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
+    <!-- Include jQuery JavaScript from CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!-- Add Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Add Bootstrap JavaScript (optional, if you need Bootstrap features like tabs) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 20px;
+        }
+
+        .title {
+            margin: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid #333; /* Darker border for the title */
+            border-radius: 8px; /* Rounded corners */
+            padding: 10px;
+            background-color: #e0e0e0; /* Slightly darker background for the title */
+            width: 85%
+        }
+
+        .subtitle {
+            margin: 10px auto;
+            font-size: 20px;
+            text-align: justify;
+            font-weight: bold;
+            /* color: #777; Color for the subtitle */
+        }
+
+        .instruction {
+            margin: 20px;
+            font-size: 18px;
+            text-align: justify;
+        }
+
+        .legend {
+            margin: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px auto;
+            width: 100%;
+        }
+
+        .video-player {
+            width: 30%; /* Adjusted width for better spacing */
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            height: fit-content;
+        }
+
+        .video-player-large {
+            width: 80%; /* Adjusted width for better spacing */
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            height: fit-content;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .preference-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .preference-option {
+            margin-right: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #2E7D32; /* Border color for the radio button labels */
+            border-radius: 4px;
+            padding: 8px; /* Padding for better appearance */
+        }
+
+        .preference-radio {
+            margin: 0 8px;
+            font-size: 18px;
+        }
+
+        #nextButton {
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #nextButton:hover {
+            background-color: #45a049;
+        }
+
+        #nextButton:disabled {
+            background-color: #ddd; /* Disable button color */
+            color: #666; /* Text color for disabled state */
+            cursor: not-allowed; /* Change cursor for disabled state */
+        }
+
+        /* Additional styles for better readability and spacing */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .container-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 87%;
+            margin: 20px;
+            padding: 10px;
+        }
+
+        .description-container {
+            background-color: #fff; /* Slightly brighter background */
+            border: 2px solid #ddd; /* Border color */
+            border-radius: 8px; /* Rounded corners */
+            margin: 10px auto;
+            padding: 15px;
+            text-align: center;
+            width: 85%
+        }
+
+        .description-container-alternate {
+            background-color: #fff; /* Slightly brighter background */
+            border: 2px solid #ddd; /* Border color */
+            border-radius: 8px; /* Rounded corners */
+            padding: 15px;
+            text-align: center;
+            width: 45%; /* Takes half the page width */
+        }
+
+        #leftVideoPlayer, #rightVideoPlayer {
+            object-fit: cover;
+            width: 100%;
+            /* height: auto;
+            width: 628; */
+            /* height: 100; */
+        }
+
+        .leftVideoPlayer-dimensions, .rightVideoPlayer-dimensions {
+            height: 600;
+        }
+
+        .top-onglet {
+            margin-bottom: 20px;
+        }
+
+        .nav-item {
+            margin-left: 10px;
+            margin-right: 10px;
+            border-radius: 10px; /* Rounded border */
+        }
+
+        .video-js {
+            width: 100%;
+            height: inherit;
+        }
+
+        @media screen and (max-width: 1920px) {
+            .video-player {
+                height: 450px;
+            }
+            .video-player-large {
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 1440px) {
+            .video-player {
+                height: 400px;
+            }
+            .video-player-large {
+                height: 200px;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .video-player {
+                height: 350px;
+            }
+            .video-player-large {
+                height: 150px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .video-player {
+                height: 200px;
+            }
+            .video-player-large {
+                height: 100px;
+            }
+
+            .description-container,
+            .container-flex {
+                width: 95%;
+            }
+
+            .description-container-alternate {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">
+        <!-- Placeholder for the title -->
+        FastLips: an End-to-End Audiovisual Text-to-Speech System with Lip Features Prediction for Virtual Avatars
+    </div>
+
+    <div class="container-flex">
+        <div class="description-container-alternate">
+            <div class="subtitle">
+                Contact Information:
+            </div>
+
+            <div class="instruction">
+                Authors: Martin Lenglet*, Olivier Perrotin, Gérard Bailly
+                </br>
+                </br>
+                Affiliation: Univ. Grenoble Alpes, CNRS, Grenoble INP, GIPSA-lab, France
+                </br>
+                </br>
+                Mail: {martin.lenglet,olivier.perrotin,gerard.bailly}@grenoble-inp.fr
+                </br>
+                </br>
+                </br>
+                * Primary contact author
+            </div>
+        </div>
+
+        <div class="description-container-alternate">
+            <div class="subtitle">
+                Abstract
+            </div>
+
+            <div class="instruction">
+                In this paper, we introduce FastLips, an end-to-end neural model designed to generate speech and co-verbal facial movements from text, animating a virtual avatar. Based on the FastSpeech2 Text-to-Speech model, FastLips integrates an audiovisual Transformer-based encoder with distinct audio and visual neural decoders. This model combines audiovisual representations computed by the shared encoder with asynchronous generation of audio and visual features. Furthermore, we enhance the model with explicit predictors of lip aperture and spreading, adapted from prosodic FastSpeech2’s variance adaptor. The proposed model generates mel-spectrograms and facial features (head, eyes, jaw and lip movements) to drive the virtual avatar’s action units. In our evaluation, we compare FastLips with a baseline audiovisual-Tacotron2, demonstrating the advantages of the FastSpeech2 architecture for lip generation. This benefit becomes particularly prominent when implementing explicit lip prediction.
+            </div>
+        </div>
+    </div>
+
+    <div class="description-container">
+        <div class="subtitle">
+            FastLips Architecture
+        </div>
+
+        <div class="instruction">
+            <img src="resources/image/FastLips.PNG" alt="Description Image" style="width: 100%; height: auto;">
+        </div>
+    </div>
+
+    <div class="description-container">
+        <div class="subtitle">
+            Demo Samples
+        </div>
+        <div class="instruction">
+            FastLips-A&S stands for FastLips without lip predictors.
+        </div>
+
+        <ul class="nav nav-tabs top-onglet" id="myTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Lip Synchronization</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Avatar</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabsContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                <!-- Content for Tab 1 -->
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pill1-tab" data-toggle="pill" href="#pill1" role="tab" aria-controls="pill1" aria-selected="true">Example 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill2-tab" data-toggle="pill" href="#pill2" role="tab" aria-controls="pill2" aria-selected="false">Example 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill3-tab" data-toggle="pill" href="#pill3" role="tab" aria-controls="pill3" aria-selected="false">Example 3</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="pill1" role="tabpanel" aria-labelledby="pill1-tab">
+                        <!-- Content for Pill 1 -->
+                        <div class="instruction">
+                            Lip Synchronization / Example: 1
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player-large">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0352_concat.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pill2" role="tabpanel" aria-labelledby="pill2-tab">
+                        <!-- Content for Pill 2 -->
+                        <div class="instruction">
+                            Lip Synchronization / Example: 2
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player-large">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0374_concat.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pill3" role="tabpanel" aria-labelledby="pill3-tab">
+                        <!-- Content for Pill 3 -->
+                        <div class="instruction">
+                            Lip Synchronization / Example: 3
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player-large">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0594_concat.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                <!-- Content for Tab 2 -->
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pill4-tab" data-toggle="pill" href="#pill4" role="tab" aria-controls="pill4" aria-selected="true">Example 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill5-tab" data-toggle="pill" href="#pill5" role="tab" aria-controls="pill5" aria-selected="false">Example 2</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pill6-tab" data-toggle="pill" href="#pill6" role="tab" aria-controls="pill6" aria-selected="false">Example 3</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="pill4" role="tabpanel" aria-labelledby="pill4-tab">
+                        <!-- Content for Pill 1 -->
+                        <div class="instruction">
+                            Avatar / Example: 1
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0156_syn_FS_PN_50000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips-A&S
+                                </div>
+                            </div>
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0156_syn_FS_PN_AS_40000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pill5" role="tabpanel" aria-labelledby="pill5-tab">
+                        <!-- Content for Pill 2 -->
+                        <div class="instruction">
+                            Avatar / Example: 2
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0178_syn_FS_PN_50000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips-A&S
+                                </div>
+                            </div>
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0178_syn_FS_PN_AS_40000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pill6" role="tabpanel" aria-labelledby="pill6-tab">
+                        <!-- Content for Pill 3 -->
+                        <div class="instruction">
+                            Avatar / Example: 3
+                        </div>
+
+                        <div class="video-container">
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0422_syn_FS_PN_50000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips-A&S
+                                </div>
+                            </div>
+                            <div class="video-player">
+                                <video class="video-js"  controls preload="auto">
+                                    <source src="resources/video/TEST0422_syn_FS_PN_AS_40000.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="legend">
+                                    FastLips
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Video.js players using class selectors
+        var videoPlayers = document.querySelectorAll('.video-js');
+
+        // Loop through all video players and initialize them
+        videoPlayers.forEach(function(player) {
+            videojs(player);
+        });
+    </script>
+
+</body>
+</html>

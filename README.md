@@ -37,7 +37,7 @@ This implementation uses the format of the [French corpus](https://zenodo.org/re
 10. training on sparse-corpus (missing visual features allowed)
 
 # Demo Page
-Visit our [demo page]() for video samples of our virtual avatar driven by audiovisual features predicted with [AVTacotron2](https://dl.acm.org/doi/abs/10.1145/3462244.3479883) and our proposed __FastLips__ model. 
+Visit our [demo page](https://martinlenglet.github.io/FastLips/demo) for video samples of our virtual avatar driven by audiovisual features predicted with [AVTacotron2](https://dl.acm.org/doi/abs/10.1145/3462244.3479883) and our proposed __FastLips__ model. 
 
 # Vocoder trained separately
 
